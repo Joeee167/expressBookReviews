@@ -3,6 +3,7 @@ let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
+const axios = require('axios');
 
 
 const doesExist = (username) => {
@@ -98,5 +99,60 @@ public_users.get('/review/:isbn',function (req, res) {
   let reqBook = req.params.isbn;
   res.send(books[reqBook].reviews);
 });
+
+function getBooksUsingPromise()
+{
+    axios.get('http://localhost:5001/')
+    .then(response => {
+        console.log('Books : ',response.data);
+    })
+
+    .catch(error => {
+        console.error("Error : ",error);
+    })
+}
+
+function getBooksByISBNUsingPromise()
+{
+    axios.get('http://localhost:5001/isbn/:isbn')
+    .then(response => {
+        console.log('Books : ',response.data);
+    })
+
+    .catch(error => {
+        console.error("Error : ",error);
+    })
+}
+
+function getBooksByAuthorUsingPromise()
+{
+    axios.get('http://localhost:5001/author/:authors')
+    .then(response => {
+        console.log('Books : ',response.data);
+    })
+
+    .catch(error => {
+        console.error("Error : ",error);
+    })
+}
+
+function getBooksByTitleUsingPromise()
+{
+    axios.get('http://localhost:5001/title/:title')
+    .then(response => {
+        console.log('Books : ',response.data);
+    })
+
+    .catch(error => {
+        console.error("Error : ",error);
+    })
+}
+
+
+
+getBooksUsingPromise();
+getBooksByISBNUsingPromise();
+getBooksByAuthorUsingPromise();
+getBooksByTitleUsingPromise();
 
 module.exports.general = public_users;
